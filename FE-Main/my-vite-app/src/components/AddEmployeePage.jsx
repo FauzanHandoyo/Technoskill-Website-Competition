@@ -15,14 +15,21 @@ export default function AddEmployeePage() {
         salary,
       });
 
-      if(response.status !== 201) throw new Error("Add employee failed");
+      if (response.status !== 201) throw new Error("Add employee failed");
 
       console.log(response.data);
 
+      // Optionally, reset the form or display a success message
+      setName("");
+      setDivision("");
+      setSalary("");
+      alert("Employee added successfully!");
+
     } catch (error) {
       console.error(error);
+      alert("Failed to add employee");
     }
-  }
+  };
 
   return (
     <div className="bg-[#CED1DA] h-screen w-screen flex">

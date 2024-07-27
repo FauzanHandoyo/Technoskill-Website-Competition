@@ -1,17 +1,16 @@
 import { useState } from "react";
-
 import DashboardElement from "./elements/DashboardElement";
-
 import employeeIcon from "../assets/employee.svg";
 
 export default function MyInfoPage() {
   const [name, setName] = useState("");
+
   return (
     <div className="bg-[#CED1DA] h-screen w-screen flex">
       <DashboardElement />
 
       <div className="bg-[#2B2E63] w-[622px] h-[675px] m-auto rounded-2xl flex flex-col text-white">
-        <img src={employeeIcon} className="w-[240px] mx-auto mt-24" />
+        <img src={employeeIcon} className="w-[240px] mx-auto mt-24" alt="Employee Icon" />
 
         <p className="text-[30px] mx-auto mt-20">My Info</p>
 

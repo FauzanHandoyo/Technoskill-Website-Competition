@@ -1,17 +1,17 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
+const cors = require("cors");
 
 const managerRoute = require("./routes/manager.route");
 const employeeRoute = require("./routes/employee.route");
 
-const cors = require("cors");
 dotenv.config();
 
-const port = 8000; // Isi nomor port di sini;
+const port = 8000;
 const app = express();
 
-app.use(cors());
+app.use(cors()); // Enable CORS
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 

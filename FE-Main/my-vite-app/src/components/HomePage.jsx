@@ -1,12 +1,13 @@
-import DashboardElement from "./elements/DashboardElement";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import DashboardElement from "./elements/DashboardElement";
 
 export default function HomePage() {
   const [data, setData] = useState([]);
+
   const handleHomePage = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/employee/get");
+      const response = await axios.get("http://localhost:8000/employee");
       console.log(response.data);
 
       setData(response.data);
@@ -40,26 +41,3 @@ export default function HomePage() {
     </div>
   );
 }
-
-const data = [
-  {
-    name: "ABC",
-    div: "HR",
-    salary: "Rp 5000",
-  },
-  {
-    name: "JHK",
-    div: "HR",
-    salary: "Rp 5000",
-  },
-  {
-    name: "POI",
-    div: "HR",
-    salary: "Rp 5000",
-  },
-  {
-    name: "KKK",
-    div: "HR",
-    salary: "Rp 5000",
-  },
-];

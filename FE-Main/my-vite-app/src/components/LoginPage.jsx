@@ -1,25 +1,24 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import DashboardElement from "./elements/DashboardElement";
 
 export default function LoginPage() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-
   const navigate = useNavigate();
+
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/manager/login", {name , password});
-      if(response.status !== 200) throw new Error("Login failed");
+      const response = await axios.post("http://localhost:8000/manager/login", { name, password });
+      if (response.status !== 200) throw new Error("Login failed");
       console.log(response.data);
       navigate('/home');
     } catch (error) {
       console.error(error);
+      alert("Login failed");
     }
-  }
-
+  };
 
   return (
     <div className="bg-[#CED1DA] h-screen w-screen flex">
@@ -40,6 +39,7 @@ export default function LoginPage() {
         <div className="mx-auto mt-10">
           <p className="text-[20px]">Password</p>
           <input
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2"
@@ -51,7 +51,7 @@ export default function LoginPage() {
             className="text-white underline"
             onClick={() => navigate("/register")}
           >
-            register?
+            Register?
           </p>
 
           <button className="bg-[#6F90AF] p-2 px-3 rounded-2xl" onClick={handleLogin}>
