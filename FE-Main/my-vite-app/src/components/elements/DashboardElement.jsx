@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import homeIcon from "../../assets/home.svg";
 import addEmployeeIcon from "../../assets/addPerson.svg";
 import myInfoIcon from "../../assets/person.svg";
-import logoutIcon from "../../assets/login.svg"; // Assuming you are using the same icon for logout
+import logoutIcon from "../../assets/login.svg";
 
 export default function DashboardElement() {
   const navigate = useNavigate();
