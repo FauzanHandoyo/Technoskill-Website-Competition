@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import DashboardElement from "./elements/DashboardElement";
 
 export default function HomePage() {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   const fetchEmployees = async () => {
     try {
@@ -16,6 +18,20 @@ export default function HomePage() {
       setData(response.data);
     } catch (error) {
       console.error("Error fetching employees:", error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(`http://localhost:8000/employee/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      fetchEmployees(); // Refresh the employee list
+    } catch (error) {
+      console.error("Error deleting employee:", error);
     }
   };
 
@@ -37,6 +53,18 @@ export default function HomePage() {
               <p>{employee.name}</p>
               <p>{employee.division}</p>
               <p>{employee.salary}</p>
+              <button
+                className="bg-blue-500 text-white p-2 rounded mb-2"
+                onClick={() => navigate(`/edit-employee/${employee.id}`)}
+              >
+                Edit
+              </button>
+              <button
+                className="bg-red-500 text-white p-2 rounded"
+                onClick={() => handleDelete(employee.id)}
+              >
+                Delete
+              </button>
             </li>
           ))}
         </ol>
