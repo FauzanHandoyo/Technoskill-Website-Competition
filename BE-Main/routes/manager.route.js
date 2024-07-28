@@ -1,5 +1,5 @@
 const express = require("express");
-const managerController = require("../controllers/manager.controller"); // Ensure this path is correct
+const managerController = require("../controllers/manager.controller"); 
 const router = express.Router();
 
 router.post("/register", managerController.registerManager);

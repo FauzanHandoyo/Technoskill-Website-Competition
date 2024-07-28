@@ -1,7 +1,18 @@
+//gajadi dipake pake yang elements dasbroard
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Sidebar = () => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   return (
     <div className="sidebar">
       <Link to="/my-info" className="sidebar-item">
@@ -22,12 +33,12 @@ const Sidebar = () => {
           <span>Add Employee</span>
         </div>
       </Link>
-      <Link to="/login" className="sidebar-item">
+      <div className="sidebar-item" onClick={handleLogout} style={{ cursor: 'pointer' }}>
         <div>
-          <img src="/path/to/login-icon.png" alt="Login" />
-          <span>Login</span>
+          <img src="/path/to/logout-icon.png" alt="Logout" />
+          <span>Logout</span>
         </div>
-      </Link>
+      </div>
     </div>
   );
 };
