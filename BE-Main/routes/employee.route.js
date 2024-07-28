@@ -1,9 +1,10 @@
 const express = require("express");
 const employeeController = require("../controllers/employee.controller");
+const authenticateToken = require("../middlewares/auth");
 const router = express.Router();
 
-router.post("/add", employeeController.addEmployee);
-router.post("/get", employeeController.getEmployee);
-// Masukkan rute-rute lain di
+router.post("/add", authenticateToken, employeeController.addEmployee);
+router.get("/", authenticateToken, employeeController.getEmployee);
+router.get("/:id", authenticateToken, employeeController.getOneEmployee);
 
 module.exports = router;

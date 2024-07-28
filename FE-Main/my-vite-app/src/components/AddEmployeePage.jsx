@@ -1,28 +1,51 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import DashboardElement from "./elements/DashboardElement";
-import axios from 'axios';
 
 export default function AddEmployeePage() {
   const [name, setName] = useState("");
   const [division, setDivision] = useState("");
   const [salary, setSalary] = useState("");
+  const navigate = useNavigate();
 
   const handleAddEmployee = async () => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      alert('You must be logged in to add an employee.');
+      return;
+    }
+
     try {
       const response = await axios.post('http://localhost:8000/employee/add', {
         name,
         division,
         salary,
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
 
-      if(response.status !== 201) throw new Error("Add employee failed");
+      if (response.status !== 201) throw new Error("Add employee failed");
 
       console.log(response.data);
 
+      // Optionally, reset the form or display a success message
+      setName("");
+      setDivision("");
+      setSalary("");
+      alert("Employee added successfully!");
+
+      // Redirect to home page to see the updated list of employees
+      navigate('/home');
+
     } catch (error) {
       console.error(error);
+      alert("Failed to add employee");
     }
-  }
+  };
 
   return (
     <div className="bg-[#CED1DA] h-screen w-screen flex">
@@ -36,7 +59,7 @@ export default function AddEmployeePage() {
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2"
+            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2 rounded-md"
           />
         </div>
 
@@ -45,7 +68,7 @@ export default function AddEmployeePage() {
           <input
             value={division}
             onChange={(e) => setDivision(e.target.value)}
-            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2"
+            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2 rounded-md"
           />
         </div>
 
@@ -54,7 +77,7 @@ export default function AddEmployeePage() {
           <input
             value={salary}
             onChange={(e) => setSalary(e.target.value)}
-            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2"
+            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2 rounded-md"
           />
         </div>
 

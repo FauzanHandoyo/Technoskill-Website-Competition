@@ -5,7 +5,7 @@ create table if not exists employee (
     salary int not null
 );
 
-create table if not exists manager (
+create table if not exists managers (
     id serial primary key,
     name text not null,
     password text not null

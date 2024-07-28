@@ -1,27 +1,27 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import LoginPage from "./components/LoginPage";
+import RegisterPage from "./components/RegisterPage";
 import HomePage from "./components/HomePage";
 import AddEmployeePage from "./components/AddEmployeePage";
 import MyInfoPage from "./components/MyInfoPage";
-import LoginPage from "./components/LoginPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Layout from "./components/Layout";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to={"/login"} />} />
-
-        <Route path="/home" element={<HomePage />} />
-
-        <Route path="/add-employee" element={<AddEmployeePage />} />
-
-        <Route path="/my-info" element={<MyInfoPage />} />
-
-        <Route path="/login" element={<LoginPage />} />
-
-        {/* Input rute lain di sini */}
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/home" element={<ProtectedRoute><Layout><HomePage /></Layout></ProtectedRoute>} />
+          <Route path="/add-employee" element={<ProtectedRoute><Layout><AddEmployeePage /></Layout></ProtectedRoute>} />
+          <Route path="/my-info" element={<ProtectedRoute><Layout><MyInfoPage /></Layout></ProtectedRoute>} />
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
