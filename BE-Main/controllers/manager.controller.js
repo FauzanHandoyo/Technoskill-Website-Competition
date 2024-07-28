@@ -2,7 +2,6 @@ const pool = require("../utils/connect");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-// jwt jangan diubah
 const SECRET_KEY = 'your_jwt_secret_key';
 
 exports.registerManager = async function registerManager(req, res) {
@@ -21,7 +20,9 @@ exports.registerManager = async function registerManager(req, res) {
       [name, hashedPassword]
     );
 
-    res.status(201).json(newManager.rows[0]);
+    const token = jwt.sign({ id: newManager.rows[0].id, name: newManager.rows[0].name }, SECRET_KEY, { expiresIn: '1h' });
+
+    res.status(201).json({ token });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });

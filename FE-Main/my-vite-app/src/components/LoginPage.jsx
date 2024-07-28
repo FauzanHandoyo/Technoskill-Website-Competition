@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-import DashboardElement from "./elements/DashboardElement";
 
 export default function LoginPage() {
   const [name, setName] = useState("");
@@ -24,8 +23,6 @@ export default function LoginPage() {
 
   return (
     <div className="bg-[#CED1DA] h-screen w-screen flex">
-      <DashboardElement />
-
       <div className="bg-[#2B2E63] w-[622px] h-[675px] m-auto rounded-2xl flex flex-col text-white">
         <p className="text-[30px] mx-auto mt-20">Login</p>
 
