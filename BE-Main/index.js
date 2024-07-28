@@ -8,10 +8,10 @@ const employeeRoute = require("./routes/employee.route");
 
 dotenv.config();
 
-const port = 8000;
+const port = process.env.PORT || 8000;
 const app = express();
 
-app.use(cors()); // Enable CORS
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 

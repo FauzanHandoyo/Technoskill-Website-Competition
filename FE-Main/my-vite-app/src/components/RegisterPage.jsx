@@ -4,21 +4,27 @@ import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import DashboardElement from "./elements/DashboardElement";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
     try {
-      const response = await axios.post("http://localhost:8000/manager/login", { name, password });
-      if (response.status !== 200) throw new Error("Login failed");
+      const response = await axios.post("http://localhost:8000/manager/register", { name, password });
+      if (response.status !== 201) throw new Error("Registration failed");
       login(response.data.token);
       navigate('/home');
     } catch (error) {
       console.error(error);
-      alert("Login failed");
+      alert("Registration failed");
     }
   };
 
@@ -27,7 +33,7 @@ export default function LoginPage() {
       <DashboardElement />
 
       <div className="bg-[#2B2E63] w-[622px] h-[675px] m-auto rounded-2xl flex flex-col text-white">
-        <p className="text-[30px] mx-auto mt-20">Login</p>
+        <p className="text-[30px] mx-auto mt-20">Register</p>
 
         <div className="mx-auto mt-10">
           <p className="text-[20px]">Name</p>
@@ -48,16 +54,26 @@ export default function LoginPage() {
           />
         </div>
 
+        <div className="mx-auto mt-10">
+          <p className="text-[20px]">Confirm Password</p>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2 rounded-md"
+          />
+        </div>
+
         <div className="mx-auto mt-20 space-y-4">
           <p
             className="text-white underline cursor-pointer"
-            onClick={() => navigate("/register")}
+            onClick={() => navigate("/login")}
           >
-            Register?
+            Login?
           </p>
 
-          <button className="bg-[#6F90AF] p-2 px-3 rounded-2xl" onClick={handleLogin}>
-            Login
+          <button className="bg-[#6F90AF] p-2 px-3 rounded-2xl" onClick={handleRegister}>
+            Register
           </button>
         </div>
       </div>

@@ -5,19 +5,22 @@ import DashboardElement from "./elements/DashboardElement";
 export default function HomePage() {
   const [data, setData] = useState([]);
 
-  const handleHomePage = async () => {
+  const fetchEmployees = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/employee");
-      console.log(response.data);
-
+      const token = localStorage.getItem('token');
+      const response = await axios.get("http://localhost:8000/employee", {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       setData(response.data);
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching employees:", error);
     }
   };
 
   useEffect(() => {
-    handleHomePage();
+    fetchEmployees();
   }, []);
 
   return (
