@@ -47,6 +47,9 @@ export default function AddEmployeePage() {
     }
   };
 
+  const [hoveredButton, setHoveredButton] = useState(null);
+  const handleHover = (buttonName) => setHoveredButton(buttonName);
+  
   return (
     <div className="bg-[#CED1DA] h-screen w-screen flex">
       <DashboardElement />
@@ -82,7 +85,13 @@ export default function AddEmployeePage() {
         </div>
 
         <div className="mx-auto mt-20">
-          <button className="bg-[#6F90AF] p-2 px-3 rounded-2xl" onClick={handleAddEmployee}>Add</button>
+        <button
+            className={`add-employee-btn ${hoveredButton === "add-employee-btn" ? "add-employee-btn-hover" : ""} p-2 px-3 rounded-2xl`}
+            onClick={handleAddEmployee}
+            onMouseOver={() => handleHover("add-employee-btn")}
+            onMouseLeave={() => handleHover(null)}
+        >
+            Add</button>
         </div>
       </div>
     </div>

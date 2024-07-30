@@ -21,6 +21,9 @@ export default function LoginPage() {
     }
   };
 
+  const [hoveredButton, setHoveredButton] = useState(null);
+  const handleHover = (buttonName) => setHoveredButton(buttonName);
+
   return (
     <div className="bg-[#CED1DA] h-screen w-screen flex">
       <div className="bg-[#2B2E63] w-[622px] h-[675px] m-auto rounded-2xl flex flex-col text-white">
@@ -53,9 +56,15 @@ export default function LoginPage() {
             Register?
           </p>
 
-          <button className="bg-[#6F90AF] p-2 px-3 rounded-2xl" onClick={handleLogin}>
+          <button
+            className={`login-btn ${hoveredButton === "login-btn" ? "login-btn-hover" : ""} p-2 px-3 rounded-2xl`}
+            onClick={handleLogin}
+            onMouseOver={() => handleHover("login-btn")}
+            onMouseLeave={() => handleHover(null)}
+          >
             Login
           </button>
+
         </div>
       </div>
     </div>

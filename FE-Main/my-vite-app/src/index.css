@@ -37,3 +37,17 @@
 .login.login-hover {
     background-color: #2E3266;
 }
+
+.add-employee-btn {
+    background-color: #6F90AF;
+}  
+.add-employee-btn.add-employee-btn-hover {
+    background-color: #7596B5;
+}
+
+.login-btn {
+    background-color: #6F90AF;
+}  
+.login-btn.login-btn-hover {
+    background-color: #7596B5;
+}
