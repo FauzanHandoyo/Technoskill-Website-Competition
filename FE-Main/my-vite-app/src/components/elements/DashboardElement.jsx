@@ -30,7 +30,7 @@ export default function DashboardElement() {
           onMouseLeave={() => handleHover(null)}
           className={`my-info ${
             hoveredButton === "my-info" ? "my-info-hover" : ""
-          }  w-[280px] rounded-r-lg flex items-center pl-4 cursor-pointer hover:bg-[#191a39]`}
+          }  w-[280px] rounded-r-lg flex items-center pl-4 py-4 cursor-pointer hover:bg-[#191a39]`}
           onClick={() => navigate("/my-info")}
         >
           <img src={myInfoIcon} alt="My Info" />
@@ -42,7 +42,7 @@ export default function DashboardElement() {
           onMouseLeave={() => handleHover(null)}
           className={`home ${
             hoveredButton === "home" ? "home-hover" : ""
-          } w-[280px] rounded-r-lg flex items-center pl-4 cursor-pointer hover:bg-[#191a39]`}
+          } w-[280px] rounded-r-lg flex items-center pl-4 py-4 cursor-pointer hover:bg-[#191a39]`}
           onClick={() => navigate("/home")}
         >
           <img src={homeIcon} alt="Home" />
@@ -54,7 +54,7 @@ export default function DashboardElement() {
           onMouseLeave={() => handleHover(null)}
           className={`add-employee ${
             hoveredButton === "add-employee" ? "add-employee-hover" : ""
-          } w-[280px] rounded-r-lg flex items-center pl-4 cursor-pointer hover:bg-[#191a39]`}
+          } w-[280px] rounded-r-lg flex items-center pl-4 py-4 cursor-pointer hover:bg-[#191a39]`}
           onClick={() => navigate("/add-employee")}
         >
           <img src={addEmployeeIcon} alt="Add Employee" />
@@ -66,7 +66,7 @@ export default function DashboardElement() {
           onMouseLeave={() => handleHover(null)}
           className={`login ${
             hoveredButton === "login" ? "login-hover" : ""
-          } w-[280px] rounded-r-lg flex items-center pl-4 cursor-pointer hover:bg-[#191a39]`}
+          } w-[280px] rounded-r-lg flex items-center pl-4 py-4 cursor-pointer hover:bg-[#191a39]`}
           onClick={() => navigate("/login")}
         >
           <img src={loginIcon} alt="Login" />
