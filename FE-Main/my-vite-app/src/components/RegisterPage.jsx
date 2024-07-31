@@ -61,15 +61,17 @@ export default function RegisterPage() {
           />
         </div>
 
-        <div className="mx-auto mt-20 space-y-4">
+        <div className="mx-auto mt-10 space-y-4 flex justify-center ">
           <p
-            className="text-white underline cursor-pointer"
+            className="text-white underline cursor-pointer text-center"
             onClick={() => navigate("/login")}
           >
-            Login?
+          Already have an account? Login
           </p>
-
-          <button className="bg-[#6F90AF] p-2 px-3 rounded-2xl" onClick={handleRegister}>
+        </div>
+        
+        <div className="mx-auto mt-3 flex">
+          <button className="bg-[#6F90AF] p-2 px-3 rounded-full self-center " onClick={handleRegister}>
             Register
           </button>
         </div>
