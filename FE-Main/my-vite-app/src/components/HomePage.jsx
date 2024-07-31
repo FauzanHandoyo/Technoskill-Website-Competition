@@ -43,7 +43,12 @@ export default function HomePage() {
     <div className="bg-[#CED1DA] flex">
       <DashboardElement />
 
-      <div className="bg-[#798DC5] w-[1400px] h-[841px] m-auto rounded-2xl flex-1">
+      <div className="bg-gradient-to-r from-[#798DC5] to-[#3052b1] w-[1400px] h-[841px] m-auto rounded-2xl flex-1">
+        <div className="overflow-hidden">
+          <div className="text-white text-center font-bold text-[70px] mt-10 animate-text-appear animate-text-appear ">
+          Start Managing Your Company Here
+          </div>
+        </div>
         <ol className="overflow-auto w-full">
           {data.map((employee, index) => (
             <li
