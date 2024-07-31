@@ -45,18 +45,20 @@ export default function LoginPage() {
           />
         </div>
 
-        <div className="mx-auto mt-20 space-y-4">
+      <div className="mx-auto mt-20 space-y-4">
           <p
             className="text-white underline cursor-pointer"
             onClick={() => navigate("/register")}
           >
-            Register?
+            Havent made an account yet? Register
           </p>
-
+        </div>
+        <div className="mx-auto mt-4 space-y-4 flex justify-center ">
           <button className="bg-[#6F90AF] p-2 px-3 rounded-2xl" onClick={handleLogin}>
             Login
           </button>
         </div>
+      
       </div>
     </div>
   );
