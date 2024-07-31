@@ -7,14 +7,15 @@ import loginIcon from "../../assets/login.svg";
 
 export default function DashboardElement() {
   const navigate = useNavigate();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  //untuk buka/tutup sidebar
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  //untuk mengganti warna saat mousehover
   const [hoveredButton, setHoveredButton] = useState(null);
-
   const handleHover = (buttonName) => setHoveredButton(buttonName);
 
   return (
@@ -25,6 +26,9 @@ export default function DashboardElement() {
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
+        <input type="checkbox" id="darkmode-toggle"/>
+        <label for="darkmode-toggle"></label>
+        {/*my info button*/}
         <div
           onMouseOver={() => handleHover("my-info")}
           onMouseLeave={() => handleHover(null)}
@@ -37,6 +41,7 @@ export default function DashboardElement() {
           <p className="my-auto text-white ml-5 text-[20px]">My Info</p>
         </div>
 
+        {/*home button*/}
         <div
           onMouseOver={() => handleHover("home")}
           onMouseLeave={() => handleHover(null)}
@@ -49,6 +54,7 @@ export default function DashboardElement() {
           <p className="my-auto text-white ml-5 text-[20px]">Home</p>
         </div>
 
+        {/*add-employee button*/}
         <div
           onMouseOver={() => handleHover("add-employee")}
           onMouseLeave={() => handleHover(null)}
@@ -61,6 +67,7 @@ export default function DashboardElement() {
           <p className="my-auto text-white ml-5 text-[20px]">Add Employee</p>
         </div>
 
+        {/*login button*/}
         <div
           onMouseOver={() => handleHover("login")}
           onMouseLeave={() => handleHover(null)}
@@ -74,7 +81,7 @@ export default function DashboardElement() {
         </div>
       </div>
 
-      {/* Button to toggle sidebar */}
+      {/*sidebar button*/}
       <button
         onClick={toggleSidebar}
         onMouseOver={() => handleHover("sidebar-button")}
