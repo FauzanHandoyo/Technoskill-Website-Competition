@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import DashboardElement from "./elements/DashboardElement";
+import './EditEmployeePage.css';
 
 export default function EditEmployeePage() {
   const { id } = useParams();
@@ -9,6 +10,9 @@ export default function EditEmployeePage() {
   const [name, setName] = useState("");
   const [division, setDivision] = useState("");
   const [salary, setSalary] = useState("");
+  const [bornPlace, setBornPlace] = useState("");
+  const [bornDate, setBornDate] = useState("");
+  const [joinDate, setJoinDate] = useState("");
 
   useEffect(() => {
     const fetchEmployee = async () => {
@@ -23,6 +27,9 @@ export default function EditEmployeePage() {
         setName(employee.name);
         setDivision(employee.division);
         setSalary(employee.salary);
+        setBornPlace(employee.born_place);
+        setBornDate(employee.born_date);
+        setJoinDate(employee.join_date);
       } catch (error) {
         console.error("Error fetching employee:", error);
       }
@@ -38,6 +45,9 @@ export default function EditEmployeePage() {
         name,
         division,
         salary,
+        born_place: bornPlace,
+        born_date: bornDate,
+        join_date: joinDate,
       }, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -50,41 +60,72 @@ export default function EditEmployeePage() {
   };
 
   return (
-    <div className="bg-[#CED1DA] h-screen w-screen flex">
+    <div className="app">
       <DashboardElement />
 
-      <div className="bg-[#2B2E63] w-[622px] h-[675px] m-auto rounded-2xl flex flex-col text-white">
-        <p className="text-[30px] mx-auto mt-20">Edit Employee</p>
+      <div className="main-content">
+        <div className="edit-employee-container">
+          <p className="edit-employee-title">Edit Employee</p>
 
-        <div className="mx-auto mt-10">
-          <p className="text-[20px]">Name</p>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2 rounded-md"
-          />
-        </div>
+          <div className="edit-employee-item">
+            <p className="text-[20px]">Name</p>
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="input-field"
+            />
+          </div>
 
-        <div className="mx-auto mt-10">
-          <p className="text-[20px]">Division</p>
-          <input
-            value={division}
-            onChange={(e) => setDivision(e.target.value)}
-            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2 rounded-md"
-          />
-        </div>
+          <div className="edit-employee-item">
+            <p className="text-[20px]">Division</p>
+            <input
+              value={division}
+              onChange={(e) => setDivision(e.target.value)}
+              className="input-field"
+            />
+          </div>
 
-        <div className="mx-auto mt-10">
-          <p className="text-[20px]">Salary</p>
-          <input
-            value={salary}
-            onChange={(e) => setSalary(e.target.value)}
-            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2 rounded-md"
-          />
-        </div>
+          <div className="edit-employee-item">
+            <p className="text-[20px]">Salary</p>
+            <input
+              value={salary}
+              onChange={(e) => setSalary(e.target.value)}
+              className="input-field"
+            />
+          </div>
 
-        <div className="mx-auto mt-20">
-          <button className="bg-[#6F90AF] p-2 px-3 rounded-2xl" onClick={handleEditEmployee}>Update</button>
+          <div className="edit-employee-item">
+            <p className="text-[20px]">Born Place</p>
+            <input
+              value={bornPlace}
+              onChange={(e) => setBornPlace(e.target.value)}
+              className="input-field"
+            />
+          </div>
+
+          <div className="edit-employee-item">
+            <p className="text-[20px]">Born Date</p>
+            <input
+              type="date"
+              value={bornDate}
+              onChange={(e) => setBornDate(e.target.value)}
+              className="input-field"
+            />
+          </div>
+
+          <div className="edit-employee-item">
+            <p className="text-[20px]">Join Date</p>
+            <input
+              type="date"
+              value={joinDate}
+              onChange={(e) => setJoinDate(e.target.value)}
+              className="input-field"
+            />
+          </div>
+
+          <div className="edit-employee-actions">
+            <button className="edit-employee-button" onClick={handleEditEmployee}>Update</button>
+          </div>
         </div>
       </div>
     </div>
