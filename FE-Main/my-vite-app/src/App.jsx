@@ -7,6 +7,7 @@ import AddEmployeePage from "./components/AddEmployeePage";
 import MyInfoPage from "./components/MyInfoPage";
 import EditEmployeePage from "./components/EditEmployeePage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import EmployeeDetailPage from "./components/EmployeeDetailPage";
 import Layout from "./components/Layout";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/add-employee" element={<ProtectedRoute><Layout><AddEmployeePage /></Layout></ProtectedRoute>} />
           <Route path="/my-info" element={<ProtectedRoute><Layout><MyInfoPage /></Layout></ProtectedRoute>} />
           <Route path="/edit-employee/:id" element={<ProtectedRoute><EditEmployeePage /></ProtectedRoute>} />
+          <Route path="/employee/:id" element={<ProtectedRoute><EmployeeDetailPage /></ProtectedRoute>} /> 
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Router>

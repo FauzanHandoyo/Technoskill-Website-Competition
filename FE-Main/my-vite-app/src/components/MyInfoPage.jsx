@@ -1,26 +1,74 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import DashboardElement from "./elements/DashboardElement";
-import employeeIcon from "../assets/employee.svg";
+import './MyInfoPage.css';
 
 export default function MyInfoPage() {
-  const [name, setName] = useState("");
+  const [manager, setManager] = useState({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchManager = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get("http://localhost:8000/manager/me", {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        setManager(response.data);
+      } catch (error) {
+        console.error("Error fetching manager data:", error);
+      }
+    };
+
+    fetchManager();
+  }, []);
 
   return (
-    <div className="bg-[#CED1DA] h-screen w-screen flex">
+    <div className="app">
       <DashboardElement />
 
-      <div className="bg-[#2B2E63] w-[622px] h-[675px] m-auto rounded-2xl flex flex-col text-white">
-        <img src={employeeIcon} className="w-[240px] mx-auto mt-24" alt="Employee Icon" />
+      <div className="main-content">
+        <div className="my-info-container">
+          <p className="my-info-title">My Info</p>
 
-        <p className="text-[30px] mx-auto mt-20">My Info</p>
+          <div className="my-info-item">
+            <p className="text-[20px]">Name</p>
+            <input
+              value={manager.name || ""}
+              readOnly
+              className="input-field"
+            />
+          </div>
 
-        <div className="mx-auto mt-10">
-          <p className="text-[20px]">Name</p>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2"
-          />
+          <div className="my-info-item">
+            <p className="text-[20px]">Email</p>
+            <input
+              value={manager.email || ""}
+              readOnly
+              className="input-field"
+            />
+          </div>
+
+          <div className="my-info-item">
+            <p className="text-[20px]">Division</p>
+            <input
+              value={manager.division || ""}
+              readOnly
+              className="input-field"
+            />
+          </div>
+
+          <div className="my-info-item">
+            <p className="text-[20px]">Join Date</p>
+            <input
+              value={new Date(manager.join_date).toLocaleDateString() || ""}
+              readOnly
+              className="input-field"
+            />
+          </div>
         </div>
       </div>
     </div>
