@@ -1,90 +1,168 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import DashboardElement from "./elements/DashboardElement";
+import "./EditEmployeePage.css"; // Make sure to import your CSS file
 
 export default function EditEmployeePage() {
-  const { id } = useParams();
-  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [division, setDivision] = useState("");
   const [salary, setSalary] = useState("");
+  const [bornPlace, setBornPlace] = useState("");
+  const [bornDate, setBornDate] = useState("");
+  const [joinDate, setJoinDate] = useState("");
+  const [divisions, setDivisions] = useState([]);
+
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         const response = await axios.get(`http://localhost:8000/employee/${id}`, {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
         const employee = response.data;
         setName(employee.name);
         setDivision(employee.division);
         setSalary(employee.salary);
+        setBornPlace(employee.born_place);
+        setBornDate(employee.born_date);
+        setJoinDate(employee.join_date);
       } catch (error) {
         console.error("Error fetching employee:", error);
       }
     };
 
+    const fetchDivisions = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:8000/division", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setDivisions(response.data);
+      } catch (error) {
+        console.error("Error fetching divisions:", error);
+      }
+    };
+
     fetchEmployee();
+    fetchDivisions();
   }, [id]);
 
-  const handleEditEmployee = async () => {
+  const handleUpdateEmployee = async () => {
     try {
-      const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:8000/employee/${id}`, {
-        name,
-        division,
-        salary,
-      }, {
-        headers: {
-          'Authorization': `Bearer ${token}`
+      const token = localStorage.getItem("token");
+      const response = await axios.put(
+        `http://localhost:8000/employee/${id}`,
+        {
+          name,
+          division,
+          salary,
+          born_place: bornPlace,
+          born_date: bornDate,
+          join_date: joinDate,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
-      navigate('/home');
+      );
+
+      if (response.status !== 200) throw new Error("Update employee failed");
+
+      console.log(response.data);
+      navigate("/home");
     } catch (error) {
-      console.error("Error updating employee:", error);
+      console.error(error);
     }
   };
 
   return (
-    <div className="bg-[#CED1DA] h-screen w-screen flex">
+    <div className="app">
       <DashboardElement />
 
-      <div className="bg-[#2B2E63] w-[622px] h-[675px] m-auto rounded-2xl flex flex-col text-white">
-        <p className="text-[30px] mx-auto mt-20">Edit Employee</p>
+      <div className="main-content">
+        <div className="edit-employee-container">
+          <p className="edit-employee-title">Edit Employee</p>
 
-        <div className="mx-auto mt-10">
-          <p className="text-[20px]">Name</p>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2 rounded-md"
-          />
-        </div>
+          <div className="edit-employee-item">
+            <p className="text-[20px]">Name</p>
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="input-field"
+            />
+          </div>
 
-        <div className="mx-auto mt-10">
-          <p className="text-[20px]">Division</p>
-          <input
-            value={division}
-            onChange={(e) => setDivision(e.target.value)}
-            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2 rounded-md"
-          />
-        </div>
+          <div className="edit-employee-item">
+            <p className="text-[20px]">Division</p>
+            <select
+              value={division}
+              onChange={(e) => setDivision(e.target.value)}
+              className="select-dropdown"
+            >
+              <option value="">Select Division</option>
+              {divisions.map((div) => (
+                <option key={div.id} value={div.name}>
+                  {div.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="mx-auto mt-10">
-          <p className="text-[20px]">Salary</p>
-          <input
-            value={salary}
-            onChange={(e) => setSalary(e.target.value)}
-            className="bg-[#BFCBCE] w-[343px] h-[41px] text-gray-700 px-2 rounded-md"
-          />
-        </div>
+          <div className="edit-employee-item">
+            <p className="text-[20px]">Salary</p>
+            <input
+              value={salary}
+              onChange={(e) => setSalary(e.target.value)}
+              className="input-field"
+            />
+          </div>
 
-        <div className="mx-auto mt-20">
-          <button className="bg-[#6F90AF] p-2 px-3 rounded-2xl" onClick={handleEditEmployee}>Update</button>
+          <div className="edit-employee-item">
+            <p className="text-[20px]">Born Place</p>
+            <input
+              value={bornPlace}
+              onChange={(e) => setBornPlace(e.target.value)}
+              className="input-field"
+            />
+          </div>
+
+          <div className="edit-employee-item">
+            <p className="text-[20px]">Born Date</p>
+            <input
+              type="date"
+              value={bornDate}
+              onChange={(e) => setBornDate(e.target.value)}
+              className="input-field"
+            />
+          </div>
+
+          <div className="edit-employee-item">
+            <p className="text-[20px]">Join Date</p>
+            <input
+              type="date"
+              value={joinDate}
+              onChange={(e) => setJoinDate(e.target.value)}
+              className="input-field"
+            />
+          </div>
+
+          <div className="edit-employee-actions">
+            <button
+              className="edit-employee-button"
+              onClick={handleUpdateEmployee}
+            >
+              Update
+            </button>
+          </div>
         </div>
       </div>
     </div>

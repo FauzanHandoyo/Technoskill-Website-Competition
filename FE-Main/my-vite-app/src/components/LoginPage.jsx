@@ -13,6 +13,7 @@ export default function LoginPage() {
     try {
       const response = await axios.post("http://localhost:8000/manager/login", { name, password });
       if (response.status !== 200) throw new Error("Login failed");
+
       login(response.data.token);
       navigate('/home');
     } catch (error) {
@@ -46,16 +47,22 @@ export default function LoginPage() {
         </div>
 
         <div className="mx-auto mt-20 space-y-4">
+          <button className="bg-[#6F90AF] p-2 px-3 rounded-2xl" onClick={handleLogin}>
+            Login
+          </button>
           <p
             className="text-white underline cursor-pointer"
             onClick={() => navigate("/register")}
           >
             Register?
           </p>
+          <p
+            className="text-white underline cursor-pointer"
+            onClick={() => navigate("/change-password")}
+          >
+            Change Password?
+          </p>
 
-          <button className="bg-[#6F90AF] p-2 px-3 rounded-2xl" onClick={handleLogin}>
-            Login
-          </button>
         </div>
       </div>
     </div>
