@@ -42,6 +42,13 @@ body, html {
     background-color: #2E3266;
 }
 
+.data-center {
+    background-color: #2B2E63;
+}  
+.data-center.data-center-hover {
+    background-color: #2E3266;
+}
+
 .login {
     background-color: #2B2E63;
 }  

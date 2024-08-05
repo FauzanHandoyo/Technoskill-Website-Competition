@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import DashboardElement from "./elements/DashboardElement";
-import './AddEmployeePage.css';
+import "./AddEmployeePage.css";
 
 export default function AddEmployeePage() {
   const [name, setName] = useState("");
@@ -11,27 +11,51 @@ export default function AddEmployeePage() {
   const [bornPlace, setBornPlace] = useState("");
   const [bornDate, setBornDate] = useState("");
   const [joinDate, setJoinDate] = useState("");
+  const [divisions, setDivisions] = useState([]);
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchDivisions = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:8000/division", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setDivisions(response.data);
+      } catch (error) {
+        console.error("Error fetching divisions:", error);
+      }
+    };
+
+    fetchDivisions();
+  }, []);
+
   const handleAddEmployee = async () => {
     try {
-      const token = localStorage.getItem('token'); // Get the token from local storage
-      const response = await axios.post("http://localhost:8000/employee/add", {
-        name,
-        division,
-        salary,
-        born_place: bornPlace,
-        born_date: bornDate,
-        join_date: joinDate,
-      }, {
-        headers: {
-          'Authorization': `Bearer ${token}` // Add the token to the request headers
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:8000/employee/add",
+        {
+          name,
+          division,
+          salary,
+          born_place: bornPlace,
+          born_date: bornDate,
+          join_date: joinDate,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       if (response.status !== 201) throw new Error("Add employee failed");
-
+      alert("Employee added successfully!");
+      
       console.log(response.data);
       navigate("/home");
     } catch (error) {
@@ -58,11 +82,18 @@ export default function AddEmployeePage() {
 
           <div className="add-employee-item">
             <p className="text-[20px]">Division</p>
-            <input
+            <select
               value={division}
               onChange={(e) => setDivision(e.target.value)}
-              className="input-field"
-            />
+              className="select-dropdown"
+            >
+              <option value="">Select Division</option>
+              {divisions.map((div) => (
+                <option key={div.id} value={div.name}>
+                  {div.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="add-employee-item">
@@ -104,7 +135,12 @@ export default function AddEmployeePage() {
           </div>
 
           <div className="add-employee-actions">
-            <button className="add-employee-button" onClick={handleAddEmployee}>Add</button>
+            <button
+              className="add-employee-button"
+              onClick={handleAddEmployee}
+            >
+              Add
+            </button>
           </div>
         </div>
       </div>

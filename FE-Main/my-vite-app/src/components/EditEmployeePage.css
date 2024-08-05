@@ -54,3 +54,42 @@
     border: none;
   }
   
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #bfcbce;
+    color: #333;
+    font-size: 16px;
+  }
+  
+  .input-field:focus {
+    outline: none;
+    border-color: #6f90af; 
+  }
+  
+  .input-field::placeholder {
+    color: #888;
+  }
+  
+  .select-dropdown {
+    max-width: 343px; 
+    width: 100%; 
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    background-color: #bfcbce;
+    color: #333;
+    font-size: 16px;
+  }
+  
+  .select-dropdown:focus {
+    outline: none;
+    border-color: #6f90af;
+  }
+  

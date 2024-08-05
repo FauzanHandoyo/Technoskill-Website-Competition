@@ -66,14 +66,24 @@ exports.deleteEmployee = async function deleteEmployee(req, res) {
   }
 };
 
-exports.getEmployeeCount = async function getEmployeeCount(req, res) {
+exports.getEmployeeCount = async (req, res) => {
   try {
-    console.log("Reached getEmployeeCount endpoint"); // Log to verify endpoint is reached
-    const response = await pool.query("SELECT COUNT(*) FROM employee");
-    console.log("Count query response:", response.rows[0].count); // Log the response
-    res.status(200).json({ count: response.rows[0].count });
+    const result = await pool.query("SELECT COUNT(*) FROM employee");
+    const count = parseInt(result.rows[0].count, 10); // Ensure the count is parsed as an integer
+    console.log("Employee count retrieved:", count);  // Log the count
+    res.json({ count });
   } catch (error) {
-    console.error("Error in getEmployeeCount:", error); // Log any errors
+    console.error("Error fetching employee count:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.getAverageSalary = async function getAverageSalary(req, res) {
+  try {
+    const response = await pool.query("SELECT AVG(salary) as average_salary FROM employee");
+    res.status(200).json({ averageSalary: response.rows[0].average_salary || 0 });
+  } catch (error) {
+    console.error("Error calculating average salary:", error);
     res.status(500).json({ error: error.message });
   }
 };
